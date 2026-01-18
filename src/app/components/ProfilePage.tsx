@@ -1,20 +1,24 @@
 import { motion } from "motion/react";
-import { Settings, Bell, Trophy, Heart, Calendar, TrendingUp, ChevronRight } from "lucide-react";
+import { User, Calendar, TrendingUp, Heart, BookOpen, Activity, Bell, Settings as SettingsIcon, ChevronRight } from "lucide-react";
 
-export function ProfilePage() {
+interface ProfilePageProps {
+  onNavigate?: (page: string, data?: any) => void;
+}
+
+export function ProfilePage({ onNavigate }: ProfilePageProps) {
   const stats = [
     { label: "学习天数", value: "127", icon: Calendar, color: "#FF6B35" },
-    { label: "完成任务", value: "89", icon: Trophy, color: "#4FC3F7" },
+    { label: "完成任务", value: "89", icon: TrendingUp, color: "#4FC3F7" },
     { label: "健康分数", value: "92", icon: Heart, color: "#66FFCC" },
     { label: "成长指数", value: "A+", icon: TrendingUp, color: "#FFD93D" },
   ];
 
   const menuItems = [
     { label: "我的课程表", icon: Calendar, color: "#FF6B35" },
-    { label: "学习记录", icon: Trophy, color: "#4FC3F7" },
+    { label: "学习记录", icon: TrendingUp, color: "#4FC3F7" },
     { label: "健康数据", icon: Heart, color: "#66FFCC" },
     { label: "消息通知", icon: Bell, color: "#FFD93D" },
-    { label: "设置", icon: Settings, color: "#B794F6" },
+    { label: "设置", icon: SettingsIcon, color: "#B794F6" },
   ];
 
   return (
@@ -59,35 +63,43 @@ export function ProfilePage() {
         </div>
       </motion.div>
 
-      {/* 菜单列表 */}
-      <div className="flex-1 overflow-y-auto px-6 pb-24">
-        <div className="space-y-3 max-w-2xl mx-auto">
-          {menuItems.map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{ scale: 1.02, x: 4 }}
-              whileTap={{ scale: 0.98 }}
-              className="bg-white/80 backdrop-blur-lg rounded-[24px] p-4 shadow-lg border border-white/50 cursor-pointer"
+      {/* 功能菜单 */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="space-y-2"
+      >
+        {[
+          { icon: Calendar, label: "我的课程表", color: "#FF6B35", page: "myCourses" },
+          { icon: TrendingUp, label: "学习记录", color: "#4FC3F7", page: "studyRecord" },
+          { icon: Heart, label: "健康数据", color: "#66FFCC", page: "healthData" },
+          { icon: Bell, label: "消息通知", color: "#FFD93D", page: "notifications" },
+          { icon: SettingsIcon, label: "设置", color: "#B794F6", page: "settings" },
+        ].map((item, index) => (
+          <motion.button
+            key={index}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.4 + index * 0.05 }}
+            whileHover={{ scale: 1.02, x: 4 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => onNavigate?.(item.page)}
+            className="w-full bg-white/80 backdrop-blur-lg rounded-[20px] p-4 shadow-lg border border-white/50 flex items-center gap-4"
+          >
+            <div 
+              className="w-12 h-12 rounded-[16px] flex items-center justify-center"
+              style={{
+                background: `linear-gradient(135deg, ${item.color}20, ${item.color}40)`
+              }}
             >
-              <div className="flex items-center gap-4">
-                <div 
-                  className="w-12 h-12 rounded-[16px] flex items-center justify-center"
-                  style={{
-                    background: `linear-gradient(135deg, ${item.color}20, ${item.color}40)`
-                  }}
-                >
-                  <item.icon className="w-6 h-6" style={{ color: item.color }} />
-                </div>
-                <span className="flex-1 text-gray-800">{item.label}</span>
-                <ChevronRight className="w-5 h-5 text-gray-400" />
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
+              <item.icon className="w-6 h-6" style={{ color: item.color }} />
+            </div>
+            <span className="flex-1 text-gray-800">{item.label}</span>
+            <ChevronRight className="w-5 h-5 text-gray-400" />
+          </motion.button>
+        ))}
+      </motion.div>
     </div>
   );
 }

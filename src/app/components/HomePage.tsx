@@ -158,14 +158,15 @@ export function HomePage({ onNavigate }: HomePageProps) {
             </div>
           </motion.div>
 
-          {/* 午餐推荐卡片 */}
+          {/* 午餐推荐卡片 - 带动画 */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.6 }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="bg-white/80 backdrop-blur-lg rounded-[28px] p-5 shadow-lg border border-white/50 cursor-pointer"
+            onClick={() => onNavigate?.("lunchDetail")}
+            className="bg-gradient-to-br from-[#FFD93D]/30 to-[#FF6B35]/30 backdrop-blur-lg rounded-[28px] p-5 shadow-lg border border-white/50 cursor-pointer"
           >
             <div className="flex items-center gap-4">
               <div className="w-14 h-14 rounded-[20px] bg-gradient-to-br from-[#FFD93D] to-[#FF6B35] flex items-center justify-center flex-shrink-0 shadow-md">
@@ -180,12 +181,13 @@ export function HomePage({ onNavigate }: HomePageProps) {
 
           {/* 本周日程卡片 */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7 }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="bg-white/80 backdrop-blur-lg rounded-[28px] p-5 shadow-lg border border-white/50 cursor-pointer"
+            onClick={() => onNavigate?.("weekSchedule")}
+            className="bg-white/70 backdrop-blur-lg rounded-[28px] p-5 shadow-lg border border-white/50 cursor-pointer"
           >
             <div className="flex items-center gap-4">
               <div className="w-14 h-14 rounded-[20px] bg-gradient-to-br from-[#B794F6] to-[#4FC3F7] flex items-center justify-center flex-shrink-0 shadow-md">
